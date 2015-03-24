@@ -43,11 +43,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Project name</a>
+              <a class="navbar-brand" href="#">静乐藜麦</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">首页</a></li>
+                <li class="active"><a href="http://www.baidu.com">首页</a></li>
                 <li class="active"><a href="#">新闻</a></li>
                 <li><a href="#about">产品</a></li>
                 <li><a href="#about">美食</a></li>
@@ -227,6 +227,30 @@
 
     </div><!-- /.container -->
 
+<ul class="nav nav-tabs" id="myTab"> 
+      <li class="active"><a href="#home">Home</a></li> 
+      <li><a href="#profile">Profile</a></li> 
+      <li><a href="#messages">Messages</a></li> 
+      <li><a href="#settings">Settings</a></li> 
+    </ul> 
+       
+    <div class="tab-content"> 
+      <div class="tab-pane active" id="home">...</div> 
+      <div class="tab-pane" id="profile">profile</div> 
+      <div class="tab-pane" id="messages">messages</div> 
+      <div class="tab-pane" id="settings">setting</div> 
+    </div> 
+       
+    <script> 
+      $(function () { 
+        $('#myTab a:last').tab('show');//初始化显示哪个tab 
+      
+        $('#myTab a').click(function (e) { 
+          e.preventDefault();//阻止a链接的跳转行为 
+          $(this).tab('show');//显示当前选中的链接及关联的content 
+        }) 
+      }) 
+    </script>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

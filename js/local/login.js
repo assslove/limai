@@ -6,7 +6,7 @@ function login() {
 	},
 	function(data){
 		if (data == 1) {
-			location.href = "edit.html";
+			location.href = "list.html";
 		} else {
 			alert("用户身份验证出错");
 		}

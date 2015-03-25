@@ -14,19 +14,8 @@
 
 <!-- Bootstrap core CSS -->
 <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-	  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
 <!-- Custom styles for this template -->
-<link href="carousel.css" rel="stylesheet">
+<link href="css/carousel.css" rel="stylesheet">
 </head>
 <!-- NAVBAR
 ================================================== -->
@@ -79,13 +68,19 @@
 			</div>
 		</nav>
 
+		<div class="row">
+			<div class="col-md-4" id="sub_nav">
+				<a href="#">首页</a>
+			</div>
+		</div>
+		<br/>
 
 		<div class="row">
 			<div class="col-md-3">
 				<div role="tabpanel">
 					<!-- Nav tabs -->
 					<ul class="nav nav-pills nav-stacked" role="tablist">
-						<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+						<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" onclick="load_data(21)">Home</a></li>
 						<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
 						<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
 						<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
@@ -94,8 +89,43 @@
 
 			</div>
 			<div class="col-md-8">
-				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="home">home</div>
+				<div class="tab-content" id="info">
+					<div role="tabpanel" class="tab-pane active" id="home">
+						<div class="list-group">
+							<a href="#" class="list-group-item" onclick="load_info()">
+								<h4 class="list-group-item-heading">研究状况</h4>
+								<p class="list-group-item-text">下面显示部分内容</p>
+							</a>
+							<a href="#" class="list-group-item">
+								<h4 class="list-group-item-heading">研究状况</h4>
+								<p class="list-group-item-text">下面显示部分内容</p>
+							</a>
+							<a href="#" class="list-group-item">
+								<h4 class="list-group-item-heading">Data Heading</h4>
+								<p class="list-group-item-text">下面显示部分内容</p>
+							</a>
+
+						</div>
+						<nav>
+							<ul class="pagination">
+								<li>
+								<a href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+								</li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li>
+								<a href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
 					<div role="tabpanel" class="tab-pane" id="profile">profile</div>
 					<div role="tabpanel" class="tab-pane" id="messages">message</div>
 					<div role="tabpanel" class="tab-pane" id="settings">settting</div>
@@ -118,9 +148,6 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-<script src="../../assets/js/vendor/holder.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="js/local/news.js"></script>
 </body>
 </html>

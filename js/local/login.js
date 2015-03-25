@@ -13,6 +13,10 @@ function login() {
 	},"text");	
 }
 
+function remeber() {
+	$.cookies.set('name', $("#name").val());
+	$.cookies.set('password', $("#password").val());
+}
 
 function guidGenerator() {
     var S4 = function() {
@@ -22,4 +26,11 @@ function guidGenerator() {
 }
 
 $(document).ready(function() {
+	if ($.cookies.set('name') != null) {
+		$("#name").val($.cookies.get('name'));
+	}
+
+	if ($.cookies.set('password') != null) {
+		$("#password").val($.cookies.get('password'));
+	}
 });

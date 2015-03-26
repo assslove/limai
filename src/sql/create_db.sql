@@ -9,3 +9,8 @@ create table t_info (
 	`author` varchar(64) COMMENT '作者',
 	primary key(id)
 ) Engine=InnoDB, charset=utf8;
+insert into t_info values(1, 1,'1','1',1,'1');
+insert into t_info values(2, 1,'1','1',1,'1');
+insert into t_info values(3, 1,'1','1',1,'1');
+insert into t_info values(4, 1,'1','1',1,'1');
+insert into t_info values(5, 1,'1','1',1,'1');

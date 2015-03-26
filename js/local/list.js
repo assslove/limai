@@ -14,7 +14,6 @@ function send_file(file, editor, welEditable) {
 	});
 }
 
-
 function list() 
 {
 	$.post("src/dispatcher.php",{
@@ -59,7 +58,6 @@ function del_one(id)
 
 function modify_one(id) 
 {
-
 }
 
 function view_one(id)
@@ -85,6 +83,5 @@ $(document).ready(function() {
 	$('#list').click(function() {
 		list();
 	});
-
 });
 

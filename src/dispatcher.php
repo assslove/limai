@@ -2,6 +2,7 @@
 
 require_once('mysql_cli.php');
 require_once('define.php');
+require_once('log.php');
 
 $users = array (
 	array("admin", "admin"),
@@ -66,14 +67,21 @@ function del_one()
 
 function save()
 {
+	$id = $_POST['id'];
 	$type = $_POST['type'];
 	$title = $_POST['title'];
 	$content = $_POST['content'];
 
 	$mc = new MysqlCli();
 	$mc->connect();
-	$sql = "insert into t_info(type,title,content,pub_time,author) values(".$type.",'".$title."', '".
-		$content."',". time() . ", 'admin')";
+	$sql = "";
+	if ($id != 0) {
+		$sql = "update t_info set type=".$type.", title='".$title."',content='".$content."',pub_time="
+			.time()." where id=".$id;
+	} else {
+		$sql = "insert into t_info(type,title,content,pub_time,author) values(".$type.",'".$title."', '".
+			$content."',". time() . ", 'admin')";
+	}
 	$result = $mc->exec_query($sql);
 	if (!$result) {
 		echo mysql_error();
@@ -95,6 +103,28 @@ function get_submenu()
 	echo json_encode($sub_menu[$index], JSON_UNESCAPED_UNICODE);
 }
 
+function get_one() 
+{
+	$id = $_POST['id'];
+	$mc = new MysqlCli();
+	$mc->connect();
+	$result = $mc->exec_query("select * from t_info where id=".$id . " limit 1");
+	if (!$result) {
+		writelog("get info failed, id=". $id);
+		return ;
+	}
+
+	$row = mysql_fetch_array($result);
+	$ret = array();
+	array_push($ret,$id);
+	array_push($ret,$row['title']);
+	array_push($ret,$row['content']);
+	array_push($ret,$row['type']);
+	mysql_free_result($result);
+
+	echo json_encode($ret, JSON_UNESCAPED_UNICODE); 
+}
+
 //协议处理器
 $func = $_POST['func'];
 switch ($func) {
@@ -110,6 +140,8 @@ case 'get_menu':
 	return get_menu();
 case 'get_submenu':
 	return get_submenu();
+case 'get_one':
+	return get_one();
 case '2':
 	break;
 default:

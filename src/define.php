@@ -14,7 +14,7 @@ $menu = array(
 	"8"=> array("news.html", "关于我们")
 );
 
-$sub_menu == array(
+$sub_menu = array(
 	"1" => array(
 		"101" => "首页",
 		"102" => "其它"

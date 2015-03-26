@@ -33,11 +33,13 @@ function save()
 		"func":"save",
 		"type" : $('#submenu').val(), 
 		"title": $('#title').val(),
-		"content" : aHTML
+		"content" : aHTML,
+		"id" : $("#id").val()
 	},
 	function(data){
 		if (data == 1) {
 			$('#list_li').click();
+			$.cookies.set("new", 0);
 		} else {
 			alert("保存不成功");
 		}
@@ -58,6 +60,24 @@ function del_one(id)
 
 function modify_one(id) 
 {
+	$.cookies.set("new", 1);
+	$("#add_li").click();
+
+	$.post("src/dispatcher.php", {
+		"func" : "get_one", 
+		"id" : id
+	}, function(data) {
+		$("#id").val(data[0]);
+		$("#title").val(data[1]);
+		//content
+		$('.click2edit').code(data[2]);
+		//select
+		$("#menu").val(parseInt(data[3]/100));
+		$("#menu").click();
+		setTimeout(function() {
+			$("#submenu").val(parseInt(data[3]));
+		}, 300);
+	}, "json");
 }
 
 function view_one(id)
@@ -71,8 +91,9 @@ function get_submenu(index)
 		"index": index
 	},
 	function(data){
+		$('#submenu').empty();
 		for (var key in data) {
-			$('#submenu').append("<option value='"+ key +"'>" + data[key][1] + "</option>");
+			$('#submenu').append("<option value='"+ key +"'>" + data[key] + "</option>");
 		}
 	},"json");	
 }
@@ -83,7 +104,7 @@ $(document).ready(function() {
 		$(this).tab('show');
 	});
 
-	$('#add').click(function() {
+	$('#add_li').click(function() {
 		$('.click2edit').summernote({
 			height: "500px",
 			focus: false,
@@ -91,6 +112,20 @@ $(document).ready(function() {
 				send_file(files[0], editor, welEditable);
 			}
 		});
+
+		if (!$.cookies.get("new")) {
+			$('#id').val(0);
+			$('#title').val("");
+			$('.click2edit').code("请输入文字");
+		}
+	});
+
+	$('#list_li').click(function() {
+		list();
+	});
+
+	$('#menu').click(function() {
+		get_submenu($('#menu').val());
 	});
 
 	$.post("src/dispatcher.php",{
@@ -103,11 +138,7 @@ $(document).ready(function() {
 	},"json");	
 
 	get_submenu(1);
-
-	$('#list_li').click(function() {
-		list();
-	});
-
+	$('#add_li').click();
 	$('#list_li').click();
 });
 

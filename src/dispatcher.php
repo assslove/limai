@@ -1,6 +1,7 @@
 <?php
 
 require_once('mysql_cli.php');
+require_once('define.php');
 
 $users = array (
 	array("admin", "admin"),
@@ -81,6 +82,19 @@ function save()
 	}
 }
 
+function get_menu()
+{
+	global $menu;
+	echo json_encode($menu, JSON_UNESCAPED_UNICODE);
+}
+
+function get_submenu()
+{
+	$index = $_POST['index'];
+	global $sub_menu;
+	echo json_encode($sub_menu[$index], JSON_UNESCAPED_UNICODE);
+}
+
 //协议处理器
 $func = $_POST['func'];
 switch ($func) {
@@ -92,6 +106,10 @@ case 'del_one':
 	return del_one();
 case 'save':
 	return save();
+case 'get_menu':
+	return get_menu();
+case 'get_submenu':
+	return get_submenu();
 case '2':
 	break;
 default:

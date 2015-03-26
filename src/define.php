@@ -4,21 +4,24 @@
  */
 
 $menu = array(
-	"首页"=> ("#", 1), 
-	"新闻"=> ("news.html", 2),
-	"产品"=> ("news.html", 3),
-	"功效"=> ("news.html", 4),
-	"美食"=> ("news.html", 5),
-	"环境"=> ("news.html", 6),
-	"商城"=> ("news.html", 7),
-	"关于我们"=> ("news.html", 8)
+	"1"=> array("#", "首页"), 
+	"2"=> array("news.html", "新闻"),
+	"3"=> array("news.html", "产品"),
+	"4"=> array("news.html", "功效"),
+	"5"=> array("news.html", "美食"),
+	"6"=> array("news.html", "环境"),
+	"7"=> array("news.html", "商城"),
+	"8"=> array("news.html", "关于我们")
 );
 
 $sub_menu == array(
-	"1" => array(),
+	"1" => array(
+		"101" => "首页",
+		"102" => "其它"
+	),
 	"2" => array(
 		"201"=>"公司动态", 
-		"201"=>"业内新闻", 
+		"202"=>"业内新闻", 
 	),
 	"3" => array(
 		"301"=>"批量",

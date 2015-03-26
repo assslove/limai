@@ -37,7 +37,7 @@ function save()
 	},
 	function(data){
 		if (data == 1) {
-			$('#list').click();
+			$('#list_li').click();
 		} else {
 			alert("保存不成功");
 		}
@@ -64,10 +64,23 @@ function view_one(id)
 {
 }
 
+function get_submenu(index) 
+{
+	$.post("src/dispatcher.php",{
+		"func":"get_submenu",
+		"index": index
+	},
+	function(data){
+		for (var key in data) {
+			$('#submenu').append("<option value='"+ key +"'>" + data[key][1] + "</option>");
+		}
+	},"json");	
+}
+
 $(document).ready(function() {
 	$('#myTab a').click(function (e) {
-		e.preventDefault()
-		$(this).tab('show')
+		e.preventDefault();
+		$(this).tab('show');
 	});
 
 	$('#add').click(function() {
@@ -80,8 +93,21 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#list').click(function() {
+	$.post("src/dispatcher.php",{
+		"func":"get_menu"
+	},
+	function(data){
+		for (var key in data) {
+			$('#menu').append("<option value='"+ key +"'>" + data[key][1] + "</option>");
+		}
+	},"json");	
+
+	get_submenu(1);
+
+	$('#list_li').click(function() {
 		list();
 	});
+
+	$('#list_li').click();
 });
 

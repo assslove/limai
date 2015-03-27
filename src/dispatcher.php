@@ -125,6 +125,29 @@ function get_one()
 	echo json_encode($ret, JSON_UNESCAPED_UNICODE); 
 }
 
+function get_titles()
+{
+	$type = $_POST['type'];  
+	$mc = new MysqlCli();
+	$mc->connect();
+	$sql = "select id, title, pub_time from t_info where type=".$type ." order by pub_time desc";
+	$result = $mc->exec_query($sql);
+	if (!$result) {
+		writelog("get titles failed, type=". $type);
+		return ;
+	}
+
+	$ret = array();
+	while ($row = mysql_fetch_array($result)) {
+		$item = array();
+		array_push($item, $row['id'], $row['title'], date('Y-m-d H:i',$row['pub_time']));
+		array_push($ret, $item);
+	}
+
+	mysql_free_result($result);
+	echo json_encode($ret, JSON_UNESCAPED_UNICODE);
+}
+
 //协议处理器
 $func = $_POST['func'];
 switch ($func) {
@@ -142,6 +165,8 @@ case 'get_submenu':
 	return get_submenu();
 case 'get_one':
 	return get_one();
+case 'get_titles':
+	return get_titles();
 case '2':
 	break;
 default:

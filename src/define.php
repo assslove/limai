@@ -4,7 +4,7 @@
  */
 
 $menu = array(
-	"1"=> array("#", "首页"), 
+	"1"=> array("index.html", "首页"), 
 	"2"=> array("news.html", "新闻"),
 	"3"=> array("news.html", "产品"),
 	"4"=> array("news.html", "功效"),

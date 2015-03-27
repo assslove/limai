@@ -74,14 +74,21 @@ function modify_one(id)
 		//select
 		$("#menu").val(parseInt(data[3]/100));
 		$("#menu").click();
-		setTimeout(function() {
-			$("#submenu").val(parseInt(data[3]));
-		}, 300);
+		$.cookies.set("list_submenu", parseInt(data[3]));
 	}, "json");
 }
 
 function view_one(id)
 {
+	$.post("src/dispatcher.php", {
+		"func" : "get_one", 
+		"id" : id
+	}, function(data) {
+		$.cookies.set("view_id", id);
+		var menus = $.cookies.get("global_menu");
+		var link = menus[parseInt(data[3]/100)][0];
+		location.href = link;
+	}, "json");
 }
 
 function get_submenu(index) 
@@ -94,6 +101,12 @@ function get_submenu(index)
 		$('#submenu').empty();
 		for (var key in data) {
 			$('#submenu').append("<option value='"+ key +"'>" + data[key] + "</option>");
+		}
+
+		var submenu = $.cookies.get('list_submenu');
+		if (submenu !=null && submenu != 0) {
+			$('#submenu').val(submenu);
+			$.cookies.set('list_submenu', 0);
 		}
 	},"json");	
 }
@@ -117,6 +130,8 @@ $(document).ready(function() {
 			$('#id').val(0);
 			$('#title').val("");
 			$('.click2edit').code("请输入文字");
+			$('#menu').val(1);
+			$('#submenu').val(101);
 		}
 	});
 
@@ -134,6 +149,7 @@ $(document).ready(function() {
 	function(data){
 		for (var key in data) {
 			$('#menu').append("<option value='"+ key +"'>" + data[key][1] + "</option>");
+			$.cookies.set('global_menu', data);
 		}
 	},"json");	
 

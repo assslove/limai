@@ -31,13 +31,13 @@ function switch_submenu(type)
 {
 	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>美食</a></li>";
 	$.post("src/dispatcher.php", {
-		"func" : "get_titles",
+		"func" : "get_all_content",
 		"type" : type
 	}, function(data) {
 		var titles_str = "<div class='row'>";
 		for (var i in data) {
-			var img_name = "img/3f64417a7bcb235b9853d5bb4ea5579e.jpg";
-			titles_str += "<div class='col-xs-6 col-md-3'><a href='#' class='thumbnail'><img src='" + img_name + "' alt=''>";
+			var img_name = $($(data[i][3])).find('img').attr('src');
+			titles_str += "<div class='col-xs-6 col-md-3'><a href='#' class='thumbnail'><img src='" + img_name + "' alt='' style='height:150px;'>";
 			titles_str += "<div class='caption'><center>" + data[i][1] + "</center></div></a></div>";
 		}
 

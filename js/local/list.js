@@ -85,6 +85,7 @@ function view_one(id)
 		"id" : id
 	}, function(data) {
 		$.cookies.set("view_id", id);
+		$.cookies.set("view_type", data[3]);
 		var menus = $.cookies.get("global_menu");
 		var link = menus[parseInt(data[3]/100)][0];
 		location.href = link;

@@ -6,12 +6,12 @@
 $menu = array(
 	"1"=> array("index.html", "首页"), 
 	"2"=> array("news.html", "新闻"),
-	"3"=> array("news.html", "产品"),
-	"4"=> array("news.html", "功效"),
-	"5"=> array("news.html", "美食"),
-	"6"=> array("news.html", "环境"),
-	"7"=> array("news.html", "商城"),
-	"8"=> array("news.html", "关于我们")
+	"3"=> array("product.html", "产品"),
+	"4"=> array("function.html", "功效"),
+	"5"=> array("food.html", "美食"),
+	"6"=> array("envrionment.html", "环境"),
+	"7"=> array("shop.html", "商城"),
+	"8"=> array("about.html", "关于我们")
 );
 
 $sub_menu = array(

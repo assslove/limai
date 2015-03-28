@@ -34,13 +34,13 @@ function switch_submenu(type)
 		"func" : "get_titles",
 		"type" : type
 	}, function(data) {
-		var titles_str = "<div role='tabpanel' class='tab-pane active' id='submenu_" + 201 + "'><div class='list-group'>";
+		var titles_str = "<div role='tabpanel' class='tab-pane active' id='submenu_" + 501 + "'><div class='list-group'>";
 		for (var i in data) {
 			titles_str += "<a href='#' class='list-group-item' id='content_" + data[i][0] + "' onclick='get_content(" + data[i][0]+")'>" + 
-				"<h4 class='list-group-item-heading'>" + data[i][1] + "</h4>" +
-				"<p class='list-group-item-text'>发布时间:" + data[i][2] + "</p></a>";
+		"<h4 class='list-group-item-heading'>" + data[i][1] + "</h4>" +
+		"<p class='list-group-item-text'>发布时间:" + data[i][2] + "</p></a>";
 		}
-		titles_str += "</div></div>";
+		titles_str += "</div>";
 		$('#submenu_title').html(titles_str);
 	}, "json");
 	//设置子导航

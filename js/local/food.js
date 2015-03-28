@@ -1,4 +1,4 @@
-function get_menus() 
+function get_menus(type) 
 {
 	$.post("src/dispatcher.php", {
 		"func" : "get_menu",
@@ -9,7 +9,7 @@ function get_menus()
 			$('#navbar').html(menus);
 		}
 		menus +="</ul>";
-		$('#navbar_2').addClass('active');
+		$('#navbar_' + type).addClass('active');
 	}, "json");
 }
 
@@ -34,12 +34,13 @@ function switch_submenu(type)
 		"func" : "get_titles",
 		"type" : type
 	}, function(data) {
-		var titles_str = "<div role='tabpanel' class='tab-pane active' id='submenu_" + 501 + "'><div class='list-group'>";
+		var titles_str = "<div class='row'>";
 		for (var i in data) {
-			titles_str += "<a href='#' class='list-group-item' id='content_" + data[i][0] + "' onclick='get_content(" + data[i][0]+")'>" + 
-				"<h4 class='list-group-item-heading'>" + data[i][1] + "</h4>" +
-				"<p class='list-group-item-text'>发布时间:" + data[i][2] + "</p></a>";
+			var img_name = "img/3f64417a7bcb235b9853d5bb4ea5579e.jpg";
+			titles_str += "<div class='col-xs-6 col-md-3'><a href='#' class='thumbnail'><img src='" + img_name + "' alt=''>";
+			titles_str += "<div class='caption'><center>" + data[i][1] + "</center></div></a></div>";
 		}
+
 		titles_str += "</div></div>";
 		$('#submenu_title').html(titles_str);
 	}, "json");
@@ -58,7 +59,7 @@ $(document).ready(function(){
 	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>美食</a></li>";
 	var type = parseInt(view_type / 100);
 	//generator 
-	get_menus();
+	get_menus(type);
 	/*//生成小菜单*/
 	$.post("src/dispatcher.php", {
 		"func" : "get_submenu",
@@ -74,12 +75,12 @@ $(document).ready(function(){
 		$('#submenus').html(submenu_str);
 		$('#submenu_li_' + view_type).addClass("active");
 		var view_id = $.cookies.get('view_id');
-		/*if (view_id != null && view_id != 0) {*/
-		/*get_content(view_id);*/
-		/*$.cookies.set('view_id', 0);*/
-		/*} else {*/
-		/*switch_submenu(view_type);*/
-		/*}*/
+		if (view_id != null && view_id != 0) {
+			get_content(view_id);
+			$.cookies.set('view_id', 0);
+		} else {
+			switch_submenu(view_type);
+		}
 		$.cookies.set('view_type', 0);
 
 		//设置子导航

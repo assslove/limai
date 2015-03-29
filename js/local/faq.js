@@ -9,7 +9,7 @@ function get_menus()
 			$('#navbar').html(menus);
 		}
 		menus +="</ul>";
-		$('#navbar_4').addClass('active');
+		$('#navbar_9').addClass('active');
 	}, "json");
 }
 
@@ -29,7 +29,7 @@ function get_content(id)
 
 function switch_submenu(type) 
 {
-	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>功效</a></li>";
+	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>FAQ</a></li>";
 	$.post("src/dispatcher.php", {
 		"func" : "get_titles",
 		"type" : type
@@ -52,10 +52,10 @@ function switch_submenu(type)
 $(document).ready(function(){
 	var view_type = $.cookies.get('view_type');
 	if (view_type == null || view_type == 0) {
-		view_type = 401;
+		view_type = 901;
 	}
 
-	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>功效</a></li>";
+	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>FAQ</a></li>";
 	var type = parseInt(view_type / 100);
 	//generator navbar
 	get_menus();

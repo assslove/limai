@@ -9,7 +9,7 @@ function get_menus()
 			$('#navbar').html(menus);
 		}
 		menus +="</ul>";
-		$('#navbar_4').addClass('active');
+		$('#navbar_3').addClass('active');
 	}, "json");
 }
 
@@ -29,19 +29,21 @@ function get_content(id)
 
 function switch_submenu(type) 
 {
-	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>功效</a></li>";
+	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>产品</a></li>";
 	$.post("src/dispatcher.php", {
-		"func" : "get_titles",
+		"func" : "get_all_content",
 		"type" : type
 	}, function(data) {
-		var titles_str = "<div role='tabpanel' class='tab-pane active' id='submenu_" + 501 + "'><div class='list-group'>";
+		var titles_str = "<div class='row'>";
 		for (var i in data) {
-			titles_str += "<a href='#' class='list-group-item' id='content_" + data[i][0] + "' onclick='get_content(" + data[i][0]+")'>" + 
-		"<h4 class='list-group-item-heading'>" + data[i][1] + "</h4>" +
-		"<p class='list-group-item-text'>发布时间:" + data[i][2] + "</p></a>";
+			var img_name = $($(data[i][3])).find('img').attr('src');
+			titles_str += "<div class='col-xs-6 col-md-3'><a href='#' class='thumbnail'><img src='" + img_name + "' alt='' style='height:150px;'>";
+			titles_str += "<div class='caption'><center>" + data[i][1] + "</center></div></a></div>";
 		}
-		titles_str += "</div>";
+
+		titles_str += "</div></div>";
 		$('#submenu_title').html(titles_str);
+
 	}, "json");
 	//设置子导航
 	sub_nav += "<li><a href='#'>" + $.cookies.get('submenu')[type] + "</a></li>";
@@ -52,10 +54,10 @@ function switch_submenu(type)
 $(document).ready(function(){
 	var view_type = $.cookies.get('view_type');
 	if (view_type == null || view_type == 0) {
-		view_type = 401;
+		view_type = 301;
 	}
 
-	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>功效</a></li>";
+	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>产品</a></li>";
 	var type = parseInt(view_type / 100);
 	//generator navbar
 	get_menus();
@@ -73,13 +75,13 @@ $(document).ready(function(){
 		submenu_str += "</ul>";
 		$('#submenus').html(submenu_str);
 		$('#submenu_li_' + view_type).addClass("active");
-		var view_id = $.cookies.get('view_id');
-		if (view_id != null && view_id != 0) {
-			get_content(view_id);
-			$.cookies.set('view_id', 0);
-		} else {
-			switch_submenu(view_type);
-		}
+		/*var view_id = $.cookies.get('view_id');*/
+		/*if (view_id != null && view_id != 0) {*/
+		/*get_content(view_id);*/
+		/*$.cookies.set('view_id', 0);*/
+		/*} else {*/
+		switch_submenu(view_type);
+		/*}*/
 		$.cookies.set('view_type', 0);
 
 		//设置子导航

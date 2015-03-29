@@ -27,7 +27,6 @@ function list()
 function save() 
 {
 	var aHTML = $('.click2edit').code();
-	$('.click2edit').destroy();
 
 	$.post("src/dispatcher.php",{
 		"func":"save",
@@ -40,6 +39,7 @@ function save()
 		if (data == 1) {
 			$('#list_li').click();
 			$.cookies.set("new", 0);
+			$('.click2edit').destroy();
 		} else {
 			alert("保存不成功");
 		}
@@ -51,7 +51,7 @@ function del_one(id)
 {
 	$.post("src/dispatcher.php",{
 		"func":"del_one",
-		"id" : id
+	"id" : id
 	},
 	function(data){
 		$('#list').html(data);
@@ -82,7 +82,7 @@ function view_one(id)
 {
 	$.post("src/dispatcher.php", {
 		"func" : "get_one", 
-		"id" : id
+	"id" : id
 	}, function(data) {
 		$.cookies.set("view_id", id);
 		$.cookies.set("view_type", data[3]);
@@ -96,7 +96,7 @@ function get_submenu(index)
 {
 	$.post("src/dispatcher.php",{
 		"func":"get_submenu",
-		"index": index
+	"index": index
 	},
 	function(data){
 		$('#submenu').empty();

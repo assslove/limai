@@ -171,6 +171,30 @@ function get_all_content()
 	echo json_encode($ret, JSON_UNESCAPED_UNICODE);
 }
 
+
+function get_content_by_type()
+{
+	$type = $_POST['type'];
+	$mc = new MysqlCli();
+	$mc->connect();
+	$result = $mc->exec_query("select * from t_info where type=".$type. " limit 1");
+	if (!$result) {
+		writelog("get info failed, id=". $id);
+		return ;
+	}
+
+	$row = mysql_fetch_array($result);
+	$ret = array();
+	array_push($ret,$id);
+	array_push($ret,$row['title']);
+	array_push($ret,$row['content']);
+	array_push($ret,$row['type']);
+	mysql_free_result($result);
+
+	echo json_encode($ret, JSON_UNESCAPED_UNICODE); 
+
+}
+
 //协议处理器
 $func = $_POST['func'];
 switch ($func) {
@@ -192,6 +216,8 @@ case 'get_titles':
 	return get_titles();
 case 'get_all_content':
 	return get_all_content();
+case 'get_content_by_type':
+	return get_content_by_type();
 case '2':
 	break;
 default:

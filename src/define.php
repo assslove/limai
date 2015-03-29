@@ -11,7 +11,7 @@ $menu = array(
 	"5"=> array("food.html", "美食"),
 	"6"=> array("envrionment.html", "环境"),
 	"7"=> array("shop.html", "商城"),
-	"8"=> array("about.html", "关于我们")
+	"8"=> array("about.html", "联系方式")
 );
 
 $sub_menu = array(
@@ -39,7 +39,9 @@ $sub_menu = array(
 		"601"=>"种植",
 		"602"=>"公司"
 	),
-	"7" => array(),
+	"7" => array(
+		"701" => "阿里巴巴"
+	),
 	"8" => array(
 		"801"=>"关于我们",
 		"802"=>"联系我们"

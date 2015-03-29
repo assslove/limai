@@ -1,3 +1,4 @@
+
 function get_menus() 
 {
 	$.post("src/dispatcher.php", {
@@ -91,4 +92,5 @@ $(document).ready(function(){
 	/*//默认加载第一个小类别*/
 	/*switch_submenu(view_type);*/
 });
+
 

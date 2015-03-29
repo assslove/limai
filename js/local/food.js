@@ -74,13 +74,13 @@ $(document).ready(function(){
 		submenu_str += "</ul>";
 		$('#submenus').html(submenu_str);
 		$('#submenu_li_' + view_type).addClass("active");
-		var view_id = $.cookies.get('view_id');
-		if (view_id != null && view_id != 0) {
-			get_content(view_id);
-			$.cookies.set('view_id', 0);
-		} else {
+		/*var view_id = $.cookies.get('view_id');*/
+		/*if (view_id != null && view_id != 0) {*/
+		/*get_content(view_id);*/
+		/*$.cookies.set('view_id', 0);*/
+		/*} else {*/
 			switch_submenu(view_type);
-		}
+			/*}*/
 		$.cookies.set('view_type', 0);
 
 		//设置子导航

@@ -50,7 +50,7 @@ $(document).ready(function(){
 		view_type = 801;
 	}
 
-	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>关于我们</a></li>";
+	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>联系方式</a></li>";
 	var type = parseInt(view_type / 100);
 	//generator navbar
 	get_menus();

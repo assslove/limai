@@ -28,7 +28,7 @@ function get_content(id)
 
 function switch_submenu(type) 
 {
-	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>关于我们</a></li>";
+	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>联系方式</a></li>";
 	$.post("src/dispatcher.php", {
 		"func" : "get_content_by_type",
 		"type" : type

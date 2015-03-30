@@ -19,9 +19,9 @@ function get_content(id)
 		"func" : "get_one", 
 		"id" : id
 	}, function(data) {
-		var content = "<h4>" + data[1] + "</h4>";
-		content += "<hr/>";
-		content += data[2];
+	//	var content = "<h4>" + data[1] + "</h4>";
+	//	content += "<hr/>";
+		content = data[2];
 		$('#submenu_title').html(content);
 		/*var content = "<center><h3>" + data[1] + "</h3></center>";*/
 		/*content += "<p class='text-right'>发布时间: 来源: 作者: </p>";*/

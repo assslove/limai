@@ -7,10 +7,6 @@ create table t_info (
 	`content` varchar(10240) COMMENT '内容', 
 	`pub_time` int unsigned COMMENT '发表时间',
 	`author` varchar(64) COMMENT '作者',
+	`from_type` tinyint default '0' COMMENT '来源',
 	primary key(id)
 ) Engine=InnoDB, charset=utf8;
-insert into t_info values(1, 1,'1','1',1,'1');
-insert into t_info values(2, 1,'1','1',1,'1');
-insert into t_info values(3, 1,'1','1',1,'1');
-insert into t_info values(4, 1,'1','1',1,'1');
-insert into t_info values(5, 1,'1','1',1,'1');

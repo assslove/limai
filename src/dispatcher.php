@@ -120,6 +120,7 @@ function get_one()
 	array_push($ret,$row['title']);
 	array_push($ret,$row['content']);
 	array_push($ret,$row['type']);
+	array_push($ret,$row['from_type']);
 	mysql_free_result($result);
 
 	echo json_encode($ret, JSON_UNESCAPED_UNICODE); 

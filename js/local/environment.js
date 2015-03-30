@@ -20,7 +20,8 @@ function get_content(id)
 		"id" : id
 	}, function(data) {
 		var content = "<center><h3>" + data[1] + "</h3></center>";
-		content += "<p class='text-right'>发布时间: 来源: 作者: </p>";
+		var from_type = ["原创", "转载"];
+		content += "<p class='text-right'>发布时间: " + data[5]  + "     来源:" + from_type[data[4]] + "</p>";
 		content += "<hr/>";
 		content += data[2];
 		$('#submenu_title').html(content);

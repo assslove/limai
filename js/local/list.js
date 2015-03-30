@@ -32,6 +32,7 @@ function save()
 		"func":"save",
 		"type" : $('#submenu').val(), 
 		"title": $('#title').val(),
+		"from_type": $('#from_type').val(),
 		"content" : aHTML,
 		"id" : $("#id").val()
 	},
@@ -69,6 +70,7 @@ function modify_one(id)
 	}, function(data) {
 		$("#id").val(data[0]);
 		$("#title").val(data[1]);
+		$("#from_type").val(data[4]);
 		//content
 		$('.click2edit').code(data[2]);
 		//select
@@ -82,7 +84,7 @@ function view_one(id)
 {
 	$.post("src/dispatcher.php", {
 		"func" : "get_one", 
-	"id" : id
+		"id" : id
 	}, function(data) {
 		$.cookies.set("view_id", id);
 		$.cookies.set("view_type", data[3]);
@@ -96,7 +98,7 @@ function get_submenu(index)
 {
 	$.post("src/dispatcher.php",{
 		"func":"get_submenu",
-	"index": index
+		"index": index
 	},
 	function(data){
 		$('#submenu').empty();

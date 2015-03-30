@@ -71,16 +71,17 @@ function save()
 	$type = $_POST['type'];
 	$title = $_POST['title'];
 	$content = $_POST['content'];
+	$from_type= $_POST['from_type'];
 
 	$mc = new MysqlCli();
 	$mc->connect();
 	$sql = "";
 	if ($id != 0) {
 		$sql = "update t_info set type=".$type.", title='".$title."',content='".mysql_escape_string($content)."',pub_time="
-			.time()." where id=".$id;
+			.time().", from_type=".$from_type." where id=".$id;
 	} else {
-		$sql = "insert into t_info(type,title,content,pub_time,author) values(".$type.",'".$title."', '".
-			mysql_escape_string($content)."',". time() . ", 'admin')";
+		$sql = "insert into t_info(type,title,content,pub_time,author, from_type) values(".$type.",'".$title."', '".
+			mysql_escape_string($content)."',". time() . ", 'admin', 0)";
 	}
 	$result = $mc->exec_query($sql);
 	if (!$result) {
@@ -121,6 +122,7 @@ function get_one()
 	array_push($ret,$row['content']);
 	array_push($ret,$row['type']);
 	array_push($ret,$row['from_type']);
+	array_push($ret, date('Y-m-d H:i', $row['pub_time']));
 	mysql_free_result($result);
 
 	echo json_encode($ret, JSON_UNESCAPED_UNICODE); 

@@ -31,13 +31,17 @@ function login()
  */
 function list_all() 
 {
-	$html="<table class='table table-hover table-condensed'><thead><tr><th>#</th><th>类型</th><th>标题</th><th>时间</th><th>操作</th></tr></thead><tbody>";
+	global $menu;
+	global $sub_menu;
+	$html="<table class='table table-hover table-condensed'><thead><tr><th>#</th><th>类型</th><th>来源</th><th>标题</th><th>时间</th><th>操作</th></tr></thead><tbody>";
 	$mc = new MysqlCli();
 	$mc->connect();
-	$result = $mc->exec_query("select id, type, title, pub_time from t_info order by pub_time desc");
+	$result = $mc->exec_query("select id, type, title, pub_time, from_type from t_info order by pub_time desc");
+	$from_types = array("原创", "转载");
 	if ($result) {
 		while ($row = mysql_fetch_array($result)) {
-			$html .= "<tr><th scope='row'>".$row['id']."</th><td>".$row['type']."</td><td>".$row['title']."</td><td>".date('Y-m-d H:i',$row['pub_time'])."</td><td>";
+			$type = $menu[$row['type'] / 100][1] . "/" . $sub_menu[$row['type']/100][$row['type']];
+			$html .= "<tr><th scope='row'>".$row['id']."</th><td>".$type."</td><td>".$from_types[$row['from_type']]."</td><td>".$row['title']."</td><td>".date('Y-m-d H:i',$row['pub_time'])."</td><td>";
 			$html .="<input class='btn btn-primary' type='button' onclick='modify_one(".$row['id'].")' value='修改'/> ";
 			$html .="<input class='btn btn-primary' type='button' onclick='del_one(".$row['id'].")' value='删除'/> ";
 			$html .="<input class='btn btn-primary' type='button' onclick='view_one(".$row['id'].")' value='预览'/>";

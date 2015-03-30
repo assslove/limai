@@ -1,9 +1,21 @@
 
 function get_menus() 
 {
+	var data = $.cookies.get('global_menu');
+	if (data != null) {
+		var menus = "<ul class='nav navbar-nav'>";
+		for (var key in data) {
+			menus += "<li id='navbar_" + key + "'><a href='" + data[key][0]+ "'>" + data[key][1] + "</a></li>";
+			$('#navbar').html(menus);
+		}
+		menus +="</ul>";
+		$('#navbar_1').addClass('active');
+	}
+
 	$.post("src/dispatcher.php", {
 		"func" : "get_menu",
 	}, function(data) {
+		$.cookies.set('global_menu', data);
 		var menus = "<ul class='nav navbar-nav'>";
 		for (var key in data) {
 			menus += "<li id='navbar_" + key + "'><a href='" + data[key][0]+ "'>" + data[key][1] + "</a></li>";
@@ -18,7 +30,7 @@ function get_content(id)
 {
 	$.post("src/dispatcher.php", {
 		"func" : "get_one", 
-		"id" : id
+	"id" : id
 	}, function(data) {
 		var content = "<center><h3>" + data[1] + "</h3></center>";
 		content += "<p class='text-right'>发布时间: 来源: 作者: </p>";

@@ -1,8 +1,20 @@
 function get_menus(type) 
 {
+	var data = $.cookies.get('global_menu');
+	if (data != null) {
+		var menus = "<ul class='nav navbar-nav'>";
+		for (var key in data) {
+			menus += "<li id='navbar_" + key + "'><a href='" + data[key][0]+ "'>" + data[key][1] + "</a></li>";
+			$('#navbar').html(menus);
+		}
+		menus +="</ul>";
+		$('#navbar_' + type).addClass('active');
+	}
+
 	$.post("src/dispatcher.php", {
 		"func" : "get_menu",
 	}, function(data) {
+		$.cookies.set('global_menu', data);
 		var menus = "<ul class='nav navbar-nav'>";
 		for (var key in data) {
 			menus += "<li id='navbar_" + key + "'><a href='" + data[key][0]+ "'>" + data[key][1] + "</a></li>";

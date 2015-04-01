@@ -202,6 +202,72 @@ function get_content_by_type()
 
 }
 
+function search() 
+{
+	global $menu;
+	global $sub_menu;
+	$search_title = $_POST['search_title'];
+	$html="<table class='table table-hover table-condensed'><thead><tr><th>#</th><th>类型</th><th>来源</th><th>标题</th><th>时间</th><th>操作</th></tr></thead><tbody>";
+	$mc = new MysqlCli();
+	$mc->connect();
+	$result = $mc->exec_query("select id, type, title, pub_time, from_type from t_info where title like '%".mysql_escape_string($search_title)."%' order by pub_time desc");
+	$from_types = array("原创", "转载");
+	if ($result) {
+		while ($row = mysql_fetch_array($result)) {
+			$type = $menu[$row['type'] / 100][1] . "/" . $sub_menu[$row['type']/100][$row['type']];
+			$html .= "<tr><th scope='row'>".$row['id']."</th><td>".$type."</td><td>".$from_types[$row['from_type']]."</td><td>".$row['title']."</td><td>".date('Y-m-d H:i',$row['pub_time'])."</td><td>";
+			$html .="<input class='btn btn-primary' type='button' onclick='modify_one(".$row['id'].")' value='修改'/> ";
+			$html .="<input class='btn btn-primary' type='button' onclick='del_one(".$row['id'].")' value='删除'/> ";
+			$html .="<input class='btn btn-primary' type='button' onclick='view_one(".$row['id'].")' value='预览'/>";
+			$html .="</td></tr>";
+		}
+		mysql_free_result($result);
+	}
+	$html .="</tbody></table>";
+	echo $html;
+}
+
+function list_pager() 
+{
+	$start = $_POST['start'];
+	$end = $_POST['end'];
+	$mc = new MysqlCli();
+	$mc->connect();
+	$result = $mc->exec_query("select id, type, title, pub_time, from_type from t_info order by pub_time desc limit ".$start.",".$end);
+	$ret = array();
+	if ($result) {
+		while ($row = mysql_fetch_array($result)) {
+			array_push($item, $row['id']);	
+			array_push($item, $row['type']);	
+			array_push($item, $row['title']);	
+			array_push($item, $row['content']);	
+			array_push($item, $row['pub_time']);	
+			array_push($item, $row['from_type']);	
+
+			array_push($ret, $item);
+		}
+		mysql_free_result($result);
+	}
+
+	echo json_encode($ret, JSON_UNESCAPED_UNICODE);
+}
+
+/* @brief 返回默认定义值
+ */
+function get_def_vals() 
+{
+	global $menu;
+	global $sub_menu;
+	global $from_type;
+
+	$ret = array();
+	$ret["menu"] = $menu;
+	$ret["sub_menu"] = $sub_menu;
+	$ret["from_type"] = $from_type;
+
+	echo json_encode($ret, JSON_UNESCAPED_UNICODE);
+}
+
 //协议处理器
 $func = $_POST['func'];
 switch ($func) {
@@ -225,6 +291,12 @@ case 'get_all_content':
 	return get_all_content();
 case 'get_content_by_type':
 	return get_content_by_type();
+case 'search':
+	return search();
+case 'list_pager':
+	return list_pager();
+case 'get_def_vals':
+	return get_def_vals();
 case '2':
 	break;
 default:

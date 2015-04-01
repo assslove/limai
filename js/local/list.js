@@ -96,22 +96,30 @@ function view_one(id)
 
 function get_submenu(index) 
 {
-	$.post("src/dispatcher.php",{
-		"func":"get_submenu",
-		"index": index
-	},
-	function(data){
-		$('#submenu').empty();
-		for (var key in data) {
-			$('#submenu').append("<option value='"+ key +"'>" + data[key] + "</option>");
-		}
+	var data = $.cookies.get('sub_menu')[index];
+	$('#submenu').empty();
+	for (var key in data) {
+		$('#submenu').append("<option value='"+ key +"'>" + data[key] + "</option>");
+	}
+}
 
-		var submenu = $.cookies.get('list_submenu');
-		if (submenu !=null && submenu != 0) {
-			$('#submenu').val(submenu);
-			$.cookies.set('list_submenu', 0);
-		}
-	},"json");	
+/* @brief 初始化
+*/
+function init() 
+{
+	var menu = $.cookies.get('menu');
+	for (var key in menu) {
+		$('#menu').append("<option value='"+ key +"'>" + menu[key][1] + "</option>");
+
+		get_submenu(1);
+		/*$('#add_li').click();*/
+		/*$('#list_li').click();*/
+	}
+
+	var from_type = $.cookies.get('from_type');
+	for (var key in from_type) {
+		$('#from_type').append("<option value='"+ key +"'>" + from_type[key] + "</option>");
+	}
 }
 
 $(document).ready(function() {
@@ -146,18 +154,33 @@ $(document).ready(function() {
 		get_submenu($('#menu').val());
 	});
 
-	$.post("src/dispatcher.php",{
-		"func":"get_menu"
-	},
-	function(data){
-		for (var key in data) {
-			$('#menu').append("<option value='"+ key +"'>" + data[key][1] + "</option>");
-			$.cookies.set('global_menu', data);
-		}
-	},"json");	
+	/*$.post("src/dispatcher.php",{*/
+	/*"func":"get_menu"*/
+	/*},*/
+	/*function(data){*/
+	/*for (var key in data) {*/
+	/*$('#menu').append("<option value='"+ key +"'>" + data[key][1] + "</option>");*/
+	/*$.cookies.set('global_menu', data);*/
+	/*}*/
+	/*},"json");	*/
 
-	get_submenu(1);
-	$('#add_li').click();
-	$('#list_li').click();
+
+	$("#search").click(function() {
+		$.post("src/dispatcher.php", {
+			"func" : "search",
+			"search_title" : $('#search_title').val()
+		}, function(data) {
+			$("#list").html(data);
+		}, "text");
+	});
+	//first request
+	$.post("src/dispatcher.php", {
+		"func" : "get_def_vals"
+	}, function(data) {
+		$.cookies.set("menu", data['menu']);	
+		$.cookies.set("sub_menu", data['sub_menu']);	
+		$.cookies.set("from_type", data['from_type']);	
+		init();
+	}, "json");
 });
 

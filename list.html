@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <meta name="description" content="">
-<meta name="author" content="山西静乐">
-<link rel="icon" href="../../favicon.ico">
+<meta name="author" content="山西静乐藜麦乡">
+<link rel="icon" href="img/home.ico">
 
 <title>静乐藜麦-后台管理</title>
 
@@ -26,20 +26,53 @@
 <body>
 <div class="container">
 	<div class="page-header">
-		<h1>后台管理系统<small>山西静乐</small></h1>
+		<h1>山西静乐藜麦乡后台管理系统  <small>Beta 0.1</small></h1>
 	</div>
-	<div role="tabpanel" id="myTab">
-		<!-- Nav tabs -->
-		<ul class="nav nav-pills" role="tablist">
-			<li role="presentation" class="active">
-			<a href="#list" aria-controls="list" role="tab" data-toggle="tab" id="list_li">查 看</a>
-			</li>
-			<li role="presentation"><a href="#add" aria-controls="add" role="tab" data-toggle="tab" id="add_li">新 增</a></li>
-		</ul>
+	<div class="row">
+		<div class='col-md-8'>
+			<div role="tabpanel" id="myTab">
+				<!-- Nav tabs -->
+				<ul class="nav nav-pills" role="tablist">
+					<li role="presentation" class="active">
+					<a href="#list" aria-controls="list" role="tab" data-toggle="tab" id="list_li">查 看</a>
+					</li>
+					<li role="presentation"><a href="#add" aria-controls="add" role="tab" data-toggle="tab" id="add_li">新 增</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="input-group">
+				<input id="search_title" type="text" class="form-control" placeholder="搜索标题">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" id="search">Go</button>
+				</span>
+			</div><!-- /input-group -->	
+		</div>
 	</div>
 	<br/>
 	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane" id="list"></div>
+		<div role="tabpanel" class="tab-pane" id="list">
+			<nav>
+				<ul class="pagination">
+					<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+					</li>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+					</li>
+				</ul>
+			</nav>
+
+		</div>
 		<div role="tabpanel" class="tab-pane" id="add">
 			<form class="form-horizontal">
 				<div class="form-group" style="display:none">
@@ -55,8 +88,6 @@
 					<label for="inputFrom" class="col-sm-1 control-label">来源</label>
 					<div class="col-sm-2">
 						<select class="form-control" id="from_type">
-							<option value="0">原创</option>
-							<option value="1">转载</option>
 						</select>
 					</div>
 
@@ -82,7 +113,6 @@
 					</div>
 				</div>
 			</form>	
-
 		</div>
 	</div>
 	<br/>

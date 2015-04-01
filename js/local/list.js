@@ -16,12 +16,25 @@ function send_file(file, editor, welEditable) {
 
 function list() 
 {
-	$.post("src/dispatcher.php",{
-		"func":"list"
-	},
-	function(data){
-		$('#list').html(data);
-	},"text");	
+	$.post("src/dispatcher.php", {
+		"func": "list_pager", 
+		"start": 1,
+		"end" : 400
+	}, function(data){
+		var menu = $.cookies.get('menu');
+		var submenu = $.cookies.get('sub_menu');
+		var list_html ="<table class='table table-hover table-condensed'><thead><tr><th>#</th><th>类型</th><th>来源</th><th>标题</th><th>时间</th><th>操作</th></tr></thead><tbody>";
+
+		for (var key in data) {
+			var type = menu[data[key][1] % 100][1] + "/" + submenu[data[key][1] % 100][data[key][1]];
+			list_html += "<tr><th scope='row'>" + data[key][0] + "</th><td>" + type +"</td><td>" + $.cookies.get('from_type')[data[key][4]]+ "</td><td>" + data[key][2] + "</td><td>" + data[key][3] + "</td><td>";
+			list_html +="<input class='btn btn-primary' type='button' onclick='modify_one(" + data[key][0] + ")' value='修改'/> ";
+			list_html +="<input class='btn btn-primary' type='button' onclick='del_one(" + data[key][0] + ")' value='删除'/> ";
+			list_html +="<input class='btn btn-primary' type='button' onclick='view_one("+ data[key][0] + ")' value='预览'/>";
+		}
+		list_html +="</tbody></table>";
+		$('#list').html(list_html);
+	},"json");	
 }
 
 function save() 
@@ -84,7 +97,7 @@ function view_one(id)
 {
 	$.post("src/dispatcher.php", {
 		"func" : "get_one", 
-		"id" : id
+	"id" : id
 	}, function(data) {
 		$.cookies.set("view_id", id);
 		$.cookies.set("view_type", data[3]);
@@ -112,8 +125,8 @@ function init()
 		$('#menu').append("<option value='"+ key +"'>" + menu[key][1] + "</option>");
 
 		get_submenu(1);
-		/*$('#add_li').click();*/
-		/*$('#list_li').click();*/
+		$('#add_li').click();
+		$('#list_li').click();
 	}
 
 	var from_type = $.cookies.get('from_type');

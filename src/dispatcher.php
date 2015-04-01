@@ -237,10 +237,10 @@ function list_pager()
 	$ret = array();
 	if ($result) {
 		while ($row = mysql_fetch_array($result)) {
+			$item = array();
 			array_push($item, $row['id']);	
 			array_push($item, $row['type']);	
 			array_push($item, $row['title']);	
-			array_push($item, $row['content']);	
 			array_push($item, $row['pub_time']);	
 			array_push($item, $row['from_type']);	
 

@@ -26,7 +26,7 @@ function list()
 		var list_html ="<table class='table table-hover table-condensed'><thead><tr><th>#</th><th>类型</th><th>来源</th><th>标题</th><th>时间</th><th>操作</th></tr></thead><tbody>";
 
 		for (var key in data) {
-			var type = menu[data[key][1] % 100][1] + "/" + submenu[data[key][1] % 100][data[key][1]];
+			var type = menu[parseInt(data[key][1] / 100)][1] + "/" + submenu[parseInt(data[key][1] / 100)][data[key][1]];
 			list_html += "<tr><th scope='row'>" + data[key][0] + "</th><td>" + type +"</td><td>" + $.cookies.get('from_type')[data[key][4]]+ "</td><td>" + data[key][2] + "</td><td>" + data[key][3] + "</td><td>";
 			list_html +="<input class='btn btn-primary' type='button' onclick='modify_one(" + data[key][0] + ")' value='修改'/> ";
 			list_html +="<input class='btn btn-primary' type='button' onclick='del_one(" + data[key][0] + ")' value='删除'/> ";
@@ -95,14 +95,15 @@ function modify_one(id)
 
 function view_one(id)
 {
+	var menu = $.cookies.get('menu');
 	$.post("src/dispatcher.php", {
 		"func" : "get_one", 
-	"id" : id
+		"id" : id
 	}, function(data) {
 		$.cookies.set("view_id", id);
 		$.cookies.set("view_type", data[3]);
 		var menus = $.cookies.get("global_menu");
-		var link = menus[parseInt(data[3]/100)][0];
+		var link = menu[parseInt(data[3]/100)][0];
 		location.href = link;
 	}, "json");
 }

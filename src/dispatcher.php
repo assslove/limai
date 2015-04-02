@@ -231,10 +231,22 @@ function list_pager()
 {
 	$start = $_POST['start'];
 	$end = $_POST['end'];
+	$ret = array();
+
 	$mc = new MysqlCli();
 	$mc->connect();
+	$result = null;
+	if ($start == 1) { //第1页的时候获取长度
+		$result = $mc->exec_query("select count(*) total from t_info");
+		if ($result) {
+			$row = mysql_fetch_array($result);
+			$ret["total"] = $row['total'];
+			mysql_free_result($result);
+		}
+	}
+
 	$result = $mc->exec_query("select id, type, title, pub_time, from_type from t_info order by pub_time desc limit ".$start.",".$end);
-	$ret = array();
+	$data = array();
 	if ($result) {
 		while ($row = mysql_fetch_array($result)) {
 			$item = array();
@@ -244,10 +256,11 @@ function list_pager()
 			array_push($item, $row['pub_time']);	
 			array_push($item, $row['from_type']);	
 
-			array_push($ret, $item);
+			array_push($data, $item);
 		}
 		mysql_free_result($result);
 	}
+	$ret["data"] = $data;
 
 	echo json_encode($ret, JSON_UNESCAPED_UNICODE);
 }

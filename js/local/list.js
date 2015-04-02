@@ -1,3 +1,5 @@
+var PER_PAGE_CNT = 20; //每页显示个数
+
 function send_file(file, editor, welEditable) {
 	data = new FormData();
 	data.append("file", file);
@@ -14,13 +16,26 @@ function send_file(file, editor, welEditable) {
 	});
 }
 
-function list() 
+function get_page_html(page, total)
 {
+	$start = (page - 1) * PER_PAGE_CNT + 1;
+	return "";
+}
+
+function list(page) 
+{
+	var start = (page - 1) * PER_PAGE_CNT + 1;
+	var end = start + PER_PAGE_CNT;
 	$.post("src/dispatcher.php", {
 		"func": "list_pager", 
-		"start": 1,
-		"end" : 400
-	}, function(data){
+		"start": start,
+		"end" : end
+	}, function(ret){
+		if (start == 1) {
+			var total = ret['total'];
+			$.cookies.set("info_total", total);
+		}
+		var data = ret['data'];
 		var menu = $.cookies.get('menu');
 		var submenu = $.cookies.get('sub_menu');
 		var list_html ="<table class='table table-hover table-condensed'><thead><tr><th>#</th><th>类型</th><th>来源</th><th>标题</th><th>时间</th><th>操作</th></tr></thead><tbody>";
@@ -33,6 +48,9 @@ function list()
 			list_html +="<input class='btn btn-primary' type='button' onclick='view_one("+ data[key][0] + ")' value='预览'/>";
 		}
 		list_html +="</tbody></table>";
+
+		var page_html = get_page_html(page, $.cookies.get('info_total'));
+		list_html += page_html;
 		$('#list').html(list_html);
 	},"json");	
 }
@@ -161,7 +179,7 @@ $(document).ready(function() {
 	});
 
 	$('#list_li').click(function() {
-		list();
+		list(1);
 	});
 
 	$('#menu').click(function() {

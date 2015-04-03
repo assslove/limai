@@ -1,4 +1,4 @@
-var PER_PAGE_CNT = 20; //每页显示个数
+var PER_PAGE_CNT = 10; //每页显示个数
 
 function send_file(file, editor, welEditable) {
 	data = new FormData();
@@ -16,10 +16,32 @@ function send_file(file, editor, welEditable) {
 	});
 }
 
+function prev_page()
+{
+}
+
+function next_page()
+{
+}
+
+function switch_page(page)
+{
+	list(page);
+}
+
 function get_page_html(page, total)
 {
 	$start = (page - 1) * PER_PAGE_CNT + 1;
-	return "";
+	var page_str = "<nav><ul class='pagination'><li><a href='#' aria-label='Previous' onclick='prev_page()'><span aria-hidden='true'>&laquo;</span></a></li>";
+	var max_page = total / PER_PAGE_CNT;
+
+	for (var i = page, j = 0; i < max_page && j < 5; ++i, ++j) {
+		page_str += "<li><a href='#' onclick='switch_page(" + i + ")'>" + i + "</a></li>";
+	}
+
+	page_str += "<li><a href='#' aria-label='Next' onclick='next_page()'><span aria-hidden='true'>&raquo;</span></a></li></ul></nav>";
+
+	return page_str;
 }
 
 function list(page) 
@@ -49,8 +71,6 @@ function list(page)
 		}
 		list_html +="</tbody></table>";
 
-		var page_html = get_page_html(page, $.cookies.get('info_total'));
-		list_html += page_html;
 		$('#list').html(list_html);
 	},"json");	
 }
@@ -180,22 +200,13 @@ $(document).ready(function() {
 
 	$('#list_li').click(function() {
 		list(1);
+		var page_html = get_page_html(1, $.cookies.get('info_total'));
+		$('#pager').html(page_html);
 	});
 
 	$('#menu').click(function() {
 		get_submenu($('#menu').val());
 	});
-
-	/*$.post("src/dispatcher.php",{*/
-	/*"func":"get_menu"*/
-	/*},*/
-	/*function(data){*/
-	/*for (var key in data) {*/
-	/*$('#menu').append("<option value='"+ key +"'>" + data[key][1] + "</option>");*/
-	/*$.cookies.set('global_menu', data);*/
-	/*}*/
-	/*},"json");	*/
-
 
 	$("#search").click(function() {
 		$.post("src/dispatcher.php", {

@@ -34,7 +34,7 @@
 				<!-- Nav tabs -->
 				<ul class="nav nav-pills" role="tablist">
 					<li role="presentation" class="active">
-					<a href="#list" aria-controls="list" role="tab" data-toggle="tab" id="list_li">查 看</a>
+					<a href="#list_tab" aria-controls="list" role="tab" data-toggle="tab" id="list_li">查 看</a>
 					</li>
 					<li role="presentation"><a href="#add" aria-controls="add" role="tab" data-toggle="tab" id="add_li">新 增</a></li>
 				</ul>
@@ -51,27 +51,11 @@
 	</div>
 	<br/>
 	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane" id="list">
-			<nav>
-				<ul class="pagination">
-					<li>
-					<a href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					</a>
-					</li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li>
-					<a href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					</a>
-					</li>
-				</ul>
-			</nav>
-
+		<div role="tabpanel" class="tab-pane" id="list_tab">
+			<div class="row">
+				<div class='col-md-12' id="list"></div>
+				<div class='col-md-12' id="pager"></div>
+			</div>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="add">
 			<form class="form-horizontal">

@@ -16,12 +16,28 @@ function send_file(file, editor, welEditable) {
 	});
 }
 
-function prev_page()
+function prev_page(page)
 {
+	if (page <= 1) {
+		return ;
+	}
+
+	var start = page - 5;
+	list(start);
+	$('#pager').html(get_page_html(start, $.cookies.get('info_total')));
 }
 
-function next_page()
+function next_page(page)
 {
+	total = $.cookies.get('info_total');
+	var max_page = Math.ceil(total / PER_PAGE_CNT);
+	if (page + 5 >= max_page) {
+		return ;
+	}
+
+	start = page + 5;
+	list(start);
+	$('#pager').html(get_page_html(start, total));
 }
 
 function switch_page(page)
@@ -31,15 +47,16 @@ function switch_page(page)
 
 function get_page_html(page, total)
 {
+	if (page % 5 != 1) return ; //翻页的时候才更改
 	$start = (page - 1) * PER_PAGE_CNT + 1;
-	var page_str = "<nav><ul class='pagination'><li><a href='#' aria-label='Previous' onclick='prev_page()'><span aria-hidden='true'>&laquo;</span></a></li>";
-	var max_page = total / PER_PAGE_CNT;
+	var page_str = "<nav><ul class='pagination'><li><a href='#' aria-label='Previous' onclick='prev_page(" + page + ")'><span aria-hidden='true'>&laquo;</span></a></li>";
+	var max_page = Math.ceil(total / PER_PAGE_CNT);
 
-	for (var i = page, j = 0; i < max_page && j < 5; ++i, ++j) {
+	for (var i = page, j = 0; i <= max_page && j < 5; ++i, ++j) {
 		page_str += "<li><a href='#' onclick='switch_page(" + i + ")'>" + i + "</a></li>";
 	}
 
-	page_str += "<li><a href='#' aria-label='Next' onclick='next_page()'><span aria-hidden='true'>&raquo;</span></a></li></ul></nav>";
+	page_str += "<li><a href='#' aria-label='Next' onclick='next_page(" + page + ")'><span aria-hidden='true'>&raquo;</span></a></li></ul></nav>";
 
 	return page_str;
 }
@@ -47,11 +64,10 @@ function get_page_html(page, total)
 function list(page) 
 {
 	var start = (page - 1) * PER_PAGE_CNT + 1;
-	var end = start + PER_PAGE_CNT;
 	$.post("src/dispatcher.php", {
 		"func": "list_pager", 
 		"start": start,
-		"end" : end
+		"end" : PER_PAGE_CNT
 	}, function(ret){
 		if (start == 1) {
 			var total = ret['total'];

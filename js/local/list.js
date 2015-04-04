@@ -43,6 +43,8 @@ function next_page(page)
 function switch_page(page)
 {
 	list(page);
+	$("#pager li").removeClass('active');
+	$('#page'+page).addClass('active');
 }
 
 function get_page_html(page, total)
@@ -53,7 +55,7 @@ function get_page_html(page, total)
 	var max_page = Math.ceil(total / PER_PAGE_CNT);
 
 	for (var i = page, j = 0; i <= max_page && j < 5; ++i, ++j) {
-		page_str += "<li><a href='#' onclick='switch_page(" + i + ")'>" + i + "</a></li>";
+		page_str += "<li id='page" + i + "'><a href='#' onclick='switch_page(" + i + ")'>" + i + "</a></li>";
 	}
 
 	page_str += "<li><a href='#' aria-label='Next' onclick='next_page(" + page + ")'><span aria-hidden='true'>&raquo;</span></a></li></ul></nav>";

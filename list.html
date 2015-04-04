@@ -10,7 +10,7 @@
 <meta name="author" content="山西静乐藜麦乡">
 <link rel="icon" href="img/home.ico">
 
-<title>静乐藜麦-后台管理</title>
+<title>山西静乐藜麦乡/后台管理系统 Beta 0.1</title>
 
 <!-- Bootstrap core CSS -->
 <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
 ================================================== -->
 <body>
 <div class="container">
-	<div class="page-header">
+	<div class="page-header text-center" style="margin-top:0;">
 		<h4><strong>山西静乐藜麦乡</strong>后台管理系统 <small>Beta 0.1</small></h4>
 	</div>
 	<div class="row">
@@ -40,21 +40,21 @@
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-3">
-			<div class="input-group">
-				<input id="search_title" type="text" class="form-control" placeholder="搜索标题">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button" id="search">Go</button>
-				</span>
-			</div><!-- /input-group -->	
-		</div>
 	</div>
 	<br/>
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane" id="list_tab">
 			<div class="row">
 				<div class='col-md-12' id="list"></div>
-				<div class='col-md-12' id="pager"></div>
+				<div class="col-md-3">
+					<div class="input-group">
+						<input id="search_title" type="text" class="form-control" placeholder="搜索标题">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" id="search">Go</button>
+						</span>
+					</div><!-- /input-group -->	
+				</div>
+				<div class='col-md-8 col-md-offset-7' id="pager" style="padding-top:0px;margin-top:0px;"></div>
 			</div>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="add">

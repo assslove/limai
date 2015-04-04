@@ -25,6 +25,7 @@ function prev_page(page)
 	var start = page - 5;
 	list(start);
 	$('#pager').html(get_page_html(start, $.cookies.get('info_total')));
+	$('#page'+start).addClass('active');
 }
 
 function next_page(page)
@@ -38,6 +39,7 @@ function next_page(page)
 	start = page + 5;
 	list(start);
 	$('#pager').html(get_page_html(start, total));
+	$('#page'+start).addClass('active');
 }
 
 function switch_page(page)
@@ -219,10 +221,11 @@ $(document).ready(function() {
 	});
 
 	$('#list_li').click(function() {
-		list(1);
 		var page_html = get_page_html(1, $.cookies.get('info_total'));
 		$('#pager').html(page_html);
 		$('#search_div').show();
+
+		switch_page(1);
 	});
 
 	$('#menu').click(function() {

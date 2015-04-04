@@ -214,12 +214,15 @@ $(document).ready(function() {
 			$('#menu').val(1);
 			$('#submenu').val(101);
 		}
+
+		$('#search_div').hide();
 	});
 
 	$('#list_li').click(function() {
 		list(1);
 		var page_html = get_page_html(1, $.cookies.get('info_total'));
 		$('#pager').html(page_html);
+		$('#search_div').show();
 	});
 
 	$('#menu').click(function() {

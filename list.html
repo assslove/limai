@@ -29,7 +29,7 @@
 		<h4><strong>山西静乐藜麦乡</strong>后台管理系统 <small>Beta 0.1</small></h4>
 	</div>
 	<div class="row">
-		<div class='col-md-8'>
+		<div class='col-md-6'>
 			<div role="tabpanel" id="myTab">
 				<!-- Nav tabs -->
 				<ul class="nav nav-pills" role="tablist">
@@ -40,21 +40,22 @@
 				</ul>
 			</div>
 		</div>
+		<div class="col-md-3" id='search_div'>
+			<div class="input-group">
+				<input id="search_title" type="text" class="form-control" placeholder="搜索标题">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" id="search">Go</button>
+				</span>
+			</div><!-- /input-group -->	
+		</div>
 	</div>
 	<br/>
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane" id="list_tab">
 			<div class="row">
 				<div class='col-md-12' id="list"></div>
-				<div class="col-md-3">
-					<div class="input-group">
-						<input id="search_title" type="text" class="form-control" placeholder="搜索标题">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" id="search">Go</button>
-						</span>
-					</div><!-- /input-group -->	
-				</div>
-				<div class='col-md-8 col-md-offset-7' id="pager" style="padding-top:0px;margin-top:0px;"></div>
+
+				<div class='col-md-9 col-md-offset-7' id="pager" style="padding-top:0px;margin-top:0px;"></div>
 			</div>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="add">

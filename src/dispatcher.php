@@ -66,7 +66,7 @@ function del_one()
 		return ;
 	}
 
-	return list_all();
+	return ;
 }
 
 function save()

@@ -123,10 +123,11 @@ function del_one(id)
 {
 	$.post("src/dispatcher.php",{
 		"func":"del_one",
-	"id" : id
+		"id" : id
 	},
 	function(data){
-		$('#list').html(data);
+		switch_page(1);
+		//$('#list').html(data);
 	},"text");	
 }
 

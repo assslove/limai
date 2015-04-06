@@ -78,8 +78,8 @@ function list(page)
 			$.cookies.set("info_total", total);
 		}
 		var data = ret['data'];
-		var menu = $.cookies.get('menu');
-		var submenu = $.cookies.get('sub_menu');
+		var menu = $.cookies.get('g_menu');
+		var submenu = $.cookies.get('g_sub_menu');
 		var list_html ="<table class='table table-hover table-condensed'><thead><tr><th>#</th><th>类型</th><th>来源</th><th>标题</th><th>时间</th><th>操作</th></tr></thead><tbody>";
 
 		for (var key in data) {
@@ -154,14 +154,14 @@ function modify_one(id)
 
 function view_one(id)
 {
-	var menu = $.cookies.get('menu');
+	var menu = $.cookies.get('g_menu');
 	$.post("src/dispatcher.php", {
 		"func" : "get_one", 
 		"id" : id
 	}, function(data) {
 		$.cookies.set("view_id", id);
 		$.cookies.set("view_type", data[3]);
-		var menus = $.cookies.get("global_menu");
+		var menus = $.cookies.get("g_menu");
 		var link = menu[parseInt(data[3]/100)][0];
 		location.href = link;
 	}, "json");
@@ -180,7 +180,7 @@ function get_submenu(index)
 */
 function init() 
 {
-	var menu = $.cookies.get('menu');
+	var menu = $.cookies.get('g_menu');
 	for (var key in menu) {
 		$('#menu').append("<option value='"+ key +"'>" + menu[key][1] + "</option>");
 
@@ -189,7 +189,7 @@ function init()
 		$('#list_li').click();
 	}
 
-	var from_type = $.cookies.get('from_type');
+	var from_type = $.cookies.get('g_from_type');
 	for (var key in from_type) {
 		$('#from_type').append("<option value='"+ key +"'>" + from_type[key] + "</option>");
 	}
@@ -245,9 +245,9 @@ $(document).ready(function() {
 	$.post("src/dispatcher.php", {
 		"func" : "get_def_vals"
 	}, function(data) {
-		$.cookies.set("menu", data['menu']);	
-		$.cookies.set("sub_menu", data['sub_menu']);	
-		$.cookies.set("from_type", data['from_type']);	
+		$.cookies.set("g_menu", data['menu']);	
+		$.cookies.set("g_sub_menu", data['sub_menu']);	
+		$.cookies.set("g_from_type", data['from_type']);	
 		init();
 	}, "json");
 });

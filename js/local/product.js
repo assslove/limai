@@ -1,28 +1,26 @@
+function show_menus(data, type)
+{
+	var menus = "<ul class='nav navbar-nav'>";
+	for (var key in data) {
+		menus += "<li id='navbar_" + key + "'><a href='" + data[key][0]+ "'>" + data[key][1] + "</a></li>";
+		$('#navbar').html(menus);
+	}
+	menus +="</ul>";
+	$('#navbar_' + type).addClass('active');
+}
+
 function get_menus(type) 
 {
-	var data = $.cookies.get('global_menu');
+	var data = $.cookies.get('g_menu');
 	if (data != null) {
-		var menus = "<ul class='nav navbar-nav'>";
-		for (var key in data) {
-			menus += "<li id='navbar_" + key + "'><a href='" + data[key][0]+ "'>" + data[key][1] + "</a></li>";
-			$('#navbar').html(menus);
-		}
-		menus +="</ul>";
-		$('#navbar_' + type).addClass('active');
-		return ;
+		return show_menus(data, type);
 	}
 
 	$.post("src/dispatcher.php", {
 		"func" : "get_menu",
 	}, function(data) {
-		$.cookies.set('global_menu', data);
-		var menus = "<ul class='nav navbar-nav'>";
-		for (var key in data) {
-			menus += "<li id='navbar_" + key + "'><a href='" + data[key][0]+ "'>" + data[key][1] + "</a></li>";
-			$('#navbar').html(menus);
-		}
-		menus +="</ul>";
-		$('#navbar_' + type).addClass('active');
+		$.cookies.set('g_menu', data);
+		show_menus(data, type);
 	}, "json");
 }
 
@@ -59,9 +57,50 @@ function switch_submenu(type)
 
 	}, "json");
 	//设置子导航
-	sub_nav += "<li><a href='#'>" + $.cookies.get('submenu')[type] + "</a></li>";
+	sub_nav += "<li><a href='#'>" + $.cookies.get('g_sub_menu')[parseInt(type/100)][type] + "</a></li>";
 	sub_nav += "</ol>";
 	$('#sub_nav').html(sub_nav);
+}
+
+function show_submenu(view_type, data)
+{
+	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>产品</a></li>";
+	var type = parseInt(view_type / 100);
+
+	var submenu_str = "<ul class='nav nav-pills nav-stacked' role='tablist'>";
+	var submenus = data[type];
+	for (var key in submenus) {
+		submenu_str += "<li role='presentation' id='submenu_li_" + key + "'><a href='#submenu_" + key + 
+			"' aria-controls='home' role='tab' data-toggle='tab' onclick='switch_submenu(" + key +")'>" + submenus[key] + "</a></li>";
+	}
+	submenu_str += "</ul>";
+	$('#submenus').html(submenu_str);
+	$('#submenu_li_' + view_type).addClass("active");
+	switch_submenu(view_type);
+	$.cookies.set('view_type', 0);
+
+	//设置子导航
+	sub_nav += "<li><a href='#'>" + submenus[view_type] + "</a></li>";
+	sub_nav += "</ol>";
+	$('#sub_nav').html(sub_nav);
+}
+
+function get_submenu(view_type) 
+{
+	var data = $.cookies.get('g_sub_menu');
+	if (data != null) {
+		show_submenu(view_type, data);
+	} else {
+		//first request
+		$.post("src/dispatcher.php", {
+			"func" : "get_def_vals"
+		}, function(data) {
+			$.cookies.set("g_menu", data['menu']);	
+			$.cookies.set("g_sub_menu", data['sub_menu']);	
+			$.cookies.set("g_from_type", data['from_type']);	
+		}, "json");
+		show_submenu(view_type, data['sub_menu']);
+	}
 }
 
 $(document).ready(function(){
@@ -70,40 +109,41 @@ $(document).ready(function(){
 		view_type = 301;
 	}
 
-	var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>产品</a></li>";
-	var type = parseInt(view_type / 100);
+	/*var sub_nav = "<ol class='breadcrumb'><li><a href='index.html'>首页</a><li><a href='#'>产品</a></li>";*/
+	/*var type = parseInt(view_type / 100);*/
 	//generator navbar
 	get_menus(3);
-	//生成小菜单
-	$.post("src/dispatcher.php", {
-		"func" : "get_submenu",
-		"index" : type
-	}, function(data) {
-		$.cookies.set("submenu", data);
-		var submenu_str = "<ul class='nav nav-pills nav-stacked' role='tablist'>";
-		for (var key in data) {
-			submenu_str += "<li role='presentation' id='submenu_li_" + key + "'><a href='#submenu_" + key + 
-		"' aria-controls='home' role='tab' data-toggle='tab' onclick='switch_submenu(" + key +")'>" + data[key] + "</a></li>";
-		}
-		submenu_str += "</ul>";
-		$('#submenus').html(submenu_str);
-		$('#submenu_li_' + view_type).addClass("active");
-		/*var view_id = $.cookies.get('view_id');*/
-		/*if (view_id != null && view_id != 0) {*/
-		/*get_content(view_id);*/
-		/*$.cookies.set('view_id', 0);*/
-		/*} else {*/
-		switch_submenu(view_type);
-		/*}*/
-		$.cookies.set('view_type', 0);
-
-		//设置子导航
-		sub_nav += "<li><a href='#'>" + $.cookies.get('submenu')[view_type] + "</a></li>";
-		sub_nav += "</ol>";
-		$('#sub_nav').html(sub_nav);
-	}, "json");
-
-	//默认加载第一个小类别
+	get_submenu(view_type);
+	/*//生成小菜单*/
+	/*$.post("src/dispatcher.php", {*/
+	/*"func" : "get_submenu",*/
+	/*"index" : type*/
+	/*}, function(data) {*/
+	/*$.cookies.set("submenu", data);*/
+	/*var submenu_str = "<ul class='nav nav-pills nav-stacked' role='tablist'>";*/
+	/*for (var key in data) {*/
+	/*submenu_str += "<li role='presentation' id='submenu_li_" + key + "'><a href='#submenu_" + key + */
+	/*"' aria-controls='home' role='tab' data-toggle='tab' onclick='switch_submenu(" + key +")'>" + data[key] + "</a></li>";*/
+	/*}*/
+	/*submenu_str += "</ul>";*/
+	/*$('#submenus').html(submenu_str);*/
+	/*$('#submenu_li_' + view_type).addClass("active");*/
+	/**//*var view_id = $.cookies.get('view_id');*/
+	/**//*if (view_id != null && view_id != 0) {*/
+	/**//*get_content(view_id);*/
+	/**//*$.cookies.set('view_id', 0);*/
+	/**//*} else {*/
 	/*switch_submenu(view_type);*/
+	/**//*}*/
+	/*$.cookies.set('view_type', 0);*/
+
+	/*//设置子导航*/
+	/*sub_nav += "<li><a href='#'>" + $.cookies.get('submenu')[view_type] + "</a></li>";*/
+	/*sub_nav += "</ol>";*/
+	/*$('#sub_nav').html(sub_nav);*/
+	/*}, "json");*/
+
+	/*//默认加载第一个小类别*/
+	/**//*switch_submenu(view_type);*/
 });
 

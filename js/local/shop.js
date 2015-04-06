@@ -1,6 +1,6 @@
 function get_menus(type) 
 {
-	var data = $.cookies.get('global_menu');
+	var data = $.cookies.get('g_menu');
 	if (data != null) {
 		var menus = "<ul class='nav navbar-nav'>";
 		for (var key in data) {
@@ -15,7 +15,7 @@ function get_menus(type)
 	$.post("src/dispatcher.php", {
 		"func" : "get_menu",
 	}, function(data) {
-		$.cookies.set('global_menu', data);
+		$.cookies.set('g_menu', data);
 		var menus = "<ul class='nav navbar-nav'>";
 		for (var key in data) {
 			menus += "<li id='navbar_" + key + "'><a href='" + data[key][0]+ "'>" + data[key][1] + "</a></li>";

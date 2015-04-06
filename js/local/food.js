@@ -9,6 +9,7 @@ function get_menus(type)
 		}
 		menus +="</ul>";
 		$('#navbar_' + type).addClass('active');
+		return ;
 	}
 
 	$.post("src/dispatcher.php", {

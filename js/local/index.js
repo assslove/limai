@@ -10,6 +10,7 @@ function get_menus()
 		}
 		menus +="</ul>";
 		$('#navbar_1').addClass('active');
+		return ;
 	}
 
 	$.post("src/dispatcher.php", {

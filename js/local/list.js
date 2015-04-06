@@ -222,11 +222,11 @@ $(document).ready(function() {
 	});
 
 	$('#list_li').click(function() {
+		$('#search_div').show();
 		var page_html = get_page_html(1, $.cookies.get('info_total'));
 		$('#pager').html(page_html);
-		$('#search_div').show();
-
 		switch_page(1);
+
 	});
 
 	$('#menu').click(function() {

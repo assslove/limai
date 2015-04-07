@@ -68,7 +68,7 @@ $(document).ready(function(){
 		$.cookies.set("g_menu", data['menu']);	
 		$.cookies.set("g_sub_menu", data['sub_menu']);	
 		$.cookies.set("g_from_type", data['from_type']);	
-		init();
+		//init();
 	}, "json");
 
 	get_menus(1);

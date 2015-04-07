@@ -84,7 +84,7 @@ function list(page)
 
 		for (var key in data) {
 			var type = menu[parseInt(data[key][1] / 100)][1] + "/" + submenu[parseInt(data[key][1] / 100)][data[key][1]];
-			list_html += "<tr><th scope='row'>" + data[key][0] + "</th><td>" + type +"</td><td>" + $.cookies.get('from_type')[data[key][4]]+ "</td><td>" + data[key][2] + "</td><td>" + data[key][3] + "</td><td>";
+			list_html += "<tr><th scope='row'>" + data[key][0] + "</th><td>" + type +"</td><td>" + $.cookies.get('g_from_type')[data[key][4]]+ "</td><td>" + data[key][2] + "</td><td>" + data[key][3] + "</td><td>";
 			list_html +="<input class='btn btn-primary' type='button' onclick='modify_one(" + data[key][0] + ")' value='修改'/> ";
 			list_html +="<input class='btn btn-primary' type='button' onclick='del_one(" + data[key][0] + ")' value='删除'/> ";
 			list_html +="<input class='btn btn-primary' type='button' onclick='view_one("+ data[key][0] + ")' value='预览'/>";
@@ -169,7 +169,7 @@ function view_one(id)
 
 function get_submenu(index) 
 {
-	var data = $.cookies.get('sub_menu')[index];
+	var data = $.cookies.get('g_sub_menu')[index];
 	$('#submenu').empty();
 	for (var key in data) {
 		$('#submenu').append("<option value='"+ key +"'>" + data[key] + "</option>");

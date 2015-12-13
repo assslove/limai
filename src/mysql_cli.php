@@ -11,7 +11,7 @@ class MysqlCli {
 	public function __construct() {
 		$this->host = "localhost";
 		$this->username = "root";
-		$this->passwd = "8459328";
+		$this->passwd = "root";
 		$this->db = "limai";
 	}
 
